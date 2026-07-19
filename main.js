@@ -9,7 +9,7 @@ const API_BASE_URL = window.location.hostname === 'localhost' || window.location
 
 let currentSelectedFoodItem = null;
 const orderCartArrayMemory = [];
-let localMenuMemoryCache = []; // Caches the full menu data for structural sorting
+let localMenuMemoryCache = []; // Caches full data matrix for local client arrays parsing
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchMenuData();
@@ -25,12 +25,12 @@ async function fetchMenuData() {
     const response = await fetch(`${API_BASE_URL}/menu`);
     const data = await response.json();
     if (data.success && data.menu) {
-      localMenuMemoryCache = data.menu; // Save incoming array to memory cache
+      localMenuMemoryCache = data.menu; 
       renderMenuGrid(data.menu);
     }
   } catch (error) {
     console.error("Fetch layout error:", error);
-    container.innerHTML = `<p class="text-rose-500 text-sm text-center col-span-full">⚠️ Server Offline.</p>`;
+    container.innerHTML = `<p class="text-rose-500 text-sm text-center col-span-full">Server Offline.</p>`;
   }
 }
 
@@ -44,12 +44,11 @@ function renderMenuGrid(menuItems) {
   }
 
   menuItems.forEach(item => {
-    // Generate badge overlays based on properties from backend array
     let badgeHTML = "";
     if (item.isBestSeller) {
-      badgeHTML = `<span class="absolute top-2 left-2 z-10 bg-amber-500 text-zinc-950 font-bold text-[9px] tracking-wider uppercase px-2 py-0.5 rounded-sm shadow-md">🔥 Bestseller</span>`;
+      badgeHTML = `<span class="absolute top-2 left-2 z-10 bg-amber-500 text-zinc-950 font-bold text-[9px] tracking-wider uppercase px-2 py-0.5 rounded-sm shadow-md">Bestseller</span>`;
     } else if (item.isChefRecommended) {
-      badgeHTML = `<span class="absolute top-2 left-2 z-10 bg-cyan-500 text-zinc-950 font-bold text-[9px] tracking-wider uppercase px-2 py-0.5 rounded-sm shadow-md">🧑‍🍳 Chef's Pick</span>`;
+      badgeHTML = `<span class="absolute top-2 left-2 z-10 bg-cyan-500 text-zinc-950 font-bold text-[9px] tracking-wider uppercase px-2 py-0.5 rounded-sm shadow-md">Chefs Pick</span>`;
     }
 
     const card = document.createElement("div");
@@ -58,7 +57,6 @@ function renderMenuGrid(menuItems) {
       <div class="space-y-4">
         <div class="aspect-[4/3] w-full bg-zinc-950 overflow-hidden border border-zinc-900/50 relative">
           ${badgeHTML}
-          <!-- Images are served in full color by default now -->
           <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"/>
         </div>
         <div class="space-y-1">
@@ -77,22 +75,36 @@ function renderMenuGrid(menuItems) {
 }
 
 /**
- * INTERACTIVE NAVIGATION TAB FILTERS
+ * INTERACTIVE NAVIGATION TAB FILTERS (Premium Engine Setup)
  */
 window.filterCategory = function(categoryName) {
-  // Update button visual active states
+  // Clear layout styling configurations from all buttons
   const buttons = document.querySelectorAll('.menu-tab-btn');
   buttons.forEach(btn => {
-    btn.classList.remove('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
-    btn.classList.add('border-zinc-900', 'text-zinc-400');
+    btn.classList.remove(
+      'border-cyan-500/30', 
+      'bg-cyan-950/20', 
+      'text-cyan-400', 
+      'font-bold',
+      'shadow-[0_0_15px_rgba(6,182,212,0.15)]'
+    );
+    btn.classList.add('border-zinc-900', 'text-zinc-400', 'font-medium');
   });
   
-  // Highlight clicked button safely using event target context
-  if (window.event && window.event.target) {
-    window.event.target.classList.remove('border-zinc-900', 'text-zinc-400');
-    window.event.target.classList.add('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
+  // Safely hook current targeting window event loop
+  if (window.event && window.event.currentTarget) {
+    const targetButton = window.event.currentTarget;
+    targetButton.classList.remove('border-zinc-900', 'text-zinc-400', 'font-medium');
+    targetButton.classList.add(
+      'border-cyan-500/30', 
+      'bg-cyan-950/20', 
+      'text-cyan-400', 
+      'font-bold',
+      'shadow-[0_0_15px_rgba(6,182,212,0.15)]'
+    );
   }
 
+  // Filter pipeline distribution rules matching server schema strings
   if (categoryName === 'all') {
     renderMenuGrid(localMenuMemoryCache);
   } else {
@@ -114,16 +126,13 @@ async function fetchBreweryTelemetry() {
       container.innerHTML = "";
       data.tanks.forEach(tank => {
         const item = document.createElement("div");
-        item.className = "bg-zinc-900/20 border border-zinc-900 p-6 space-y-4";
+        item.className = "bg-zinc-900/20 border border-zinc-900 p-3 space-y-2 rounded-sm text-center flex flex-col justify-between";
         item.innerHTML = `
-          <div class="flex justify-between text-xs tracking-wider">
-            <span class="font-serif-luxury text-zinc-300 font-medium">${tank.name}</span>
-            <span class="text-cyan-400 font-semibold">${tank.level}%</span>
+          <div>
+            <span class="block text-[9px] tracking-wider text-zinc-400 uppercase font-medium truncate">${tank.name}</span>
+            <span class="block text-cyan-400 font-bold text-sm mt-1">${tank.level}%</span>
           </div>
-          <div class="w-full bg-zinc-950 h-2.5 rounded-full overflow-hidden border border-zinc-900">
-            <div class="bg-gradient-to-r from-cyan-600 to-cyan-400 h-full transition-all duration-1000" style="width: ${tank.level}%"></div>
-          </div>
-          <p class="text-[10px] uppercase tracking-widest text-zinc-500">${tank.status}</p>
+          <p class="text-[8px] uppercase tracking-widest text-zinc-500 border-t border-zinc-900 pt-1.5 mt-1">${tank.status}</p>
         `;
         container.appendChild(item);
       });
@@ -210,8 +219,8 @@ function initCartSystemLogics() {
       
       const badge = document.getElementById("cartCountBadge");
       if (badge) {
-        badge.classList.add("scale-125", "bg-emerald-400");
-        setTimeout(() => badge.classList.remove("scale-125", "bg-emerald-400"), 300);
+        badge.classList.add("scale-125");
+        setTimeout(() => badge.classList.remove("scale-125"), 300);
       }
     };
   }
@@ -225,7 +234,7 @@ function initCartSystemLogics() {
         alert("Your bag is empty! Add some items first.");
         return;
       }
-      alert("🎉 Order placed successfully! Sending instructions to the Zero Degree deck kitchen.");
+      alert("Order placed successfully! Transmitting tracking sequences to the Zero Degree kitchen engine.");
       orderCartArrayMemory.length = 0; 
       updateCartRenderUIStructures(); 
       closeCartDrawer();
@@ -254,7 +263,7 @@ function updateCartRenderUIStructures() {
   if (badge) badge.innerText = totalItems;
 
   if (orderCartArrayMemory.length === 0) {
-    if (itemsList) itemsList.innerHTML = `<p class="text-center py-8 text-zinc-600">Your order bag is currently empty.</p>`;
+    if (itemsList) itemsList.innerHTML = `<p class="text-center py-8 text-zinc-600 text-xs uppercase tracking-wider">Your order bag is currently empty.</p>`;
     if (totalSum) totalSum.innerText = "₹0"; 
     return;
   }
@@ -269,11 +278,11 @@ function updateCartRenderUIStructures() {
     
     if (itemsList) {
       const row = document.createElement("div");
-      row.className = "flex justify-between items-center border-b border-zinc-900/50 pb-3 text-zinc-200";
+      row.className = "flex justify-between items-center border-b border-zinc-900 pb-3 text-zinc-200";
       row.innerHTML = `
         <div>
           <p class="font-medium text-zinc-100 text-sm">${item.name}</p>
-          <p class="text-[11px] text-zinc-500">${item.price} &times; ${item.quantity}</p>
+          <p class="text-[11px] text-zinc-500">${item.price} x ${item.quantity}</p>
         </div>
         <div class="flex items-center gap-4">
           <span class="font-medium text-zinc-300 text-sm">₹${sub}</span>

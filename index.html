@@ -1,244 +1,222 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zero Degree On The Hill — RR Nagar</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero Degree Cafe & Brewery | RR Nagar</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Google Fonts for Luxury Aesthetic -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .font-serif-luxury {
-      font-family: 'Playfair Display', serif;
-    }
+    body { font-family: 'Inter', sans-serif; }
+    .font-serif-luxury { font-family: 'Cinzel', serif; }
   </style>
 </head>
-<body class="bg-[#09090b] text-zinc-100 min-h-screen selection:bg-cyan-500 selection:text-zinc-950 overflow-x-hidden">
+<body class="bg-black text-zinc-100 min-h-screen overflow-x-hidden selection:bg-cyan-500 selection:text-black">
 
-  <!-- NAVIGATION -->
-  <nav class="fixed top-0 left-0 w-full z-40 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900/50">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-      <div class="flex flex-col">
-        <span class="text-lg font-serif-luxury tracking-[0.25em] text-zinc-100 uppercase font-semibold">Zero Degree</span>
-        <span class="text-[8px] tracking-[0.4em] text-cyan-400 uppercase">On The Hill</span>
-      </div>
-      
-      <div class="hidden md:flex items-center gap-10 text-xs tracking-widest uppercase font-medium text-zinc-400">
-        <a href="#menu" class="hover:text-zinc-100 transition-colors">Menu</a>
-        
-        <!--  Shopping Bag Indicator Trigger Button -->
-        <button id="cartToggleBtn" class="flex items-center gap-2 hover:text-cyan-400 transition-colors relative focus:outline-none">
-          <span>Bag</span>
-          <span id="cartCountBadge" class="bg-cyan-500 text-zinc-950 px-1.5 py-0.5 rounded-full text-[10px] font-bold">0</span>
-        </button>
-
-        <a href="#reserve" id="navFindTableBtn" class="px-5 py-2.5 border border-zinc-800 hover:border-cyan-400 text-zinc-200 hover:text-cyan-400 transition-all duration-300">Find a Table</a>
-      </div>
+  <!-- HEADER NAVIGATION LAYER -->
+  <nav class="border-b border-zinc-900 bg-black/80 backdrop-blur-md sticky top-0 z-40 w-full px-6 py-4 flex justify-between items-center">
+    <a href="#" class="font-serif-luxury text-xl font-bold tracking-[0.2em] text-white">ZERO DEGREE</a>
+    <div class="flex items-center gap-6">
+      <a href="#" id="navFindTableBtn" class="text-xs uppercase tracking-widest text-zinc-400 hover:text-cyan-400 transition-colors">Book Deck</a>
+      <button id="cartToggleBtn" class="relative p-2 border border-zinc-900 hover:border-zinc-700 transition-colors rounded-sm cursor-pointer">
+        <span class="text-xs uppercase tracking-widest font-medium text-zinc-300 px-2">Bag</span>
+        <span id="cartCountBadge" class="absolute -top-1.5 -right-1.5 bg-cyan-500 text-black font-bold text-[9px] w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300">0</span>
+      </button>
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
-  <section class="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-950/20 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="absolute bottom-10 right-10 w-[300px] h-[300px] bg-zinc-900/40 rounded-full blur-[100px] pointer-events-none"></div>
+  <!-- HERO PRESENTATION FRAME -->
+  <header class="relative w-full max-w-7xl mx-auto px-6 py-20 text-center space-y-6">
+    <p class="text-[10px] uppercase tracking-[0.3em] text-cyan-400 font-semibold">Rooftop Vista & Artisanal Brews</p>
+    <h1 class="text-4xl md:text-6xl font-serif-luxury text-zinc-100 tracking-wide max-w-3xl mx-auto leading-tight">
+      Elevated Gastronomy on the RR Nagar Horizon
+    </h1>
+    <div class="flex justify-center gap-4 pt-4">
+      <button id="heroBookTableBtn" class="px-6 py-3 bg-zinc-100 text-black text-xs font-semibold uppercase tracking-widest hover:bg-cyan-400 transition-colors rounded-sm cursor-pointer">
+        Secure Table Placement
+      </button>
+    </div>
+  </header>
 
-    <div class="max-w-4xl mx-auto text-center space-y-8 relative z-10">
-      <p class="text-[10px] tracking-[0.35em] text-cyan-400 uppercase font-semibold">Premium Brewery & Kitchen — RR Nagar</p>
-      
-      <h1 class="text-5xl md:text-8xl font-serif-luxury text-zinc-100 leading-[1.1] tracking-tight">
-        An Absolute Luxury <br />
-        <span class="italic font-light text-zinc-400">Dining Experience</span>
-      </h1>
-      
-      <p class="text-zinc-400 text-sm md:text-base max-w-xl mx-auto font-light leading-relaxed">
-        Escape the city rush at Bengaluru's premier hill viewport. Culinary craftsmanship meets dramatic horizons, curated exclusively for the tasteful explorer.
-      </p>
-
-      <div class="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
-        <button id="heroBookTableBtn" class="w-full sm:w-auto px-8 py-4 bg-zinc-100 text-zinc-950 font-medium text-sm tracking-wider uppercase hover:bg-cyan-400 transition-colors duration-300">
-          Book a Table
-        </button>
-        <a href="#menu" class="w-full sm:w-auto px-8 py-4 bg-transparent text-zinc-300 font-medium text-sm tracking-wider uppercase hover:text-zinc-100 transition-colors underline decoration-zinc-700 underline-offset-8">
-          View Menu
-        </a>
+  <!-- TELEMETRY METRIC DATA DASHBOARD -->
+  <section class="w-full max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+    <div class="border border-zinc-900 bg-zinc-950/40 p-6 space-y-4">
+      <h4 class="text-xs font-serif-luxury text-zinc-400 uppercase tracking-widest border-b border-zinc-900 pb-2">Rooftop View Environment Telemetry</h4>
+      <div class="grid grid-cols-2 gap-4 text-center">
+        <div class="p-3 bg-zinc-900/20 border border-zinc-900/50">
+          <p class="text-[10px] text-zinc-500 uppercase tracking-wider">Atmosphere</p>
+          <p id="widgetTemp" class="text-xl font-medium text-zinc-200 mt-1">--°C</p>
+        </div>
+        <div class="p-3 bg-zinc-900/20 border border-zinc-900/50">
+          <p class="text-[10px] text-zinc-500 uppercase tracking-wider">Sightline Range</p>
+          <p id="widgetVisibility" class="text-xs font-medium text-cyan-400 mt-2 truncate px-1">Scanning...</p>
+        </div>
+      </div>
+    </div>
+    <div class="border border-zinc-900 bg-zinc-950/40 p-6 space-y-4">
+      <h4 class="text-xs font-serif-luxury text-zinc-400 uppercase tracking-widest border-b border-zinc-900 pb-2">Live Craft Maturation Tanks</h4>
+      <div id="breweryTanksContainer" class="grid grid-cols-3 gap-2 text-xs">
+        <p class="text-zinc-600 col-span-full py-4 text-center">Awaiting live asset signals...</p>
       </div>
     </div>
   </section>
 
-  <!-- MENU SECTION -->
-  <section id="menu" class="py-24 px-6 max-w-7xl mx-auto relative z-10">
-    <div class="space-y-2 mb-16 text-center md:text-left">
-      <p class="text-[10px] tracking-[0.35em] text-cyan-400 uppercase font-semibold">Curated Culinary Selection</p>
-      <h2 class="text-3xl md:text-5xl font-serif-luxury text-zinc-100">Explore Our Menu</h2>
-    </div>
-
-<div class="flex flex-wrap justify-center gap-4 mb-10 border-b border-zinc-900 pb-6">
-  <button onclick="filterCategory('all')" class="menu-tab-btn active text-xs tracking-widest uppercase py-2 px-4 border border-cyan-500/30 bg-cyan-950/20 text-cyan-400 font-semibold transition-all duration-300">All Menu</button>
-  <button onclick="filterCategory('Brewery Special')" class="menu-tab-btn text-xs tracking-widest uppercase py-2 px-4 border border-zinc-900 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-all duration-300">Brewery</button>
-  <button onclick="filterCategory('Signature Cocktails')" class="menu-tab-btn text-xs tracking-widest uppercase py-2 px-4 border border-zinc-900 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-all duration-300">Cocktails</button>
-  <button onclick="filterCategory('Merchandise')" class="menu-tab-btn text-xs tracking-widest uppercase py-2 px-4 border border-zinc-900 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-all duration-300">⚡ Merch Store</button>
-  <button onclick="filterCategory('Learn & Do Coffee')" class="menu-tab-btn text-xs tracking-widest uppercase py-2 px-4 border border-zinc-900 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-all duration-300">☕ Coffee Academy</button>
-</div>
-
-    <!-- Container where dynamic food grid cards will inject -->
-    <div id="menuContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <p class="text-zinc-500 text-sm tracking-wider animate-pulse col-span-full text-center">Loading culinary selection...</p>
-    </div>
-  </section>
-
-  <!-- 🟢 FOOD DESCRIPTION MODAL OVERLAY -->
-  <div id="descriptionModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zinc-950/80 backdrop-blur-md opacity-0 transition-opacity duration-300 p-4">
-    <div id="descModalBox" class="relative w-full max-w-lg bg-zinc-950 border border-zinc-900/80 p-6 md:p-8 transform scale-95 opacity-0 transition-all duration-300">
+  <!-- ENHANCED CYBERPUNK PREMIUM NAVIGATION TABS -->
+  <div class="w-full max-w-6xl mx-auto px-4 my-12">
+    <div class="flex flex-wrap justify-center items-center gap-4 border-b border-zinc-900 pb-6">
       
-      <button id="closeDescModalBtn" class="absolute top-6 right-6 text-zinc-500 hover:text-zinc-200 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
+      <!-- ALL MENU BUTTON -->
+      <button 
+        onclick="filterCategory('all')" 
+        class="menu-tab-btn px-8 py-3.5 text-xs tracking-[0.25em] font-bold uppercase transition-all duration-300 border border-cyan-500/30 bg-cyan-950/20 text-cyan-400 relative overflow-hidden group shadow-[0_0_15px_rgba(6,182,212,0.15)] rounded-sm cursor-pointer"
+      >
+        <span class="relative z-10">All Menu</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
       </button>
 
-      <img id="modalImage" src="" alt="" class="w-full h-56 object-cover border border-zinc-900/50 mb-6">
-      
-      <div class="space-y-1 mb-4">
-        <p id="modalCategory" class="text-[9px] tracking-[0.2em] text-cyan-400 uppercase font-semibold"></p>
-        <h2 id="modalName" class="text-2xl font-serif-luxury text-zinc-100 tracking-wide"></h2>
+      <!-- BREWERY BUTTON -->
+      <button 
+        onclick="filterCategory('Brewery Special')" 
+        class="menu-tab-btn px-8 py-3.5 text-xs tracking-[0.25em] font-medium uppercase transition-all duration-300 border border-zinc-900 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 relative overflow-hidden group rounded-sm cursor-pointer"
+      >
+        <span class="relative z-10">Brewery</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-zinc-800/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+      </button>
+
+      <!-- COCKTAILS BUTTON -->
+      <button 
+        onclick="filterCategory('Signature Cocktails')" 
+        class="menu-tab-btn px-8 py-3.5 text-xs tracking-[0.25em] font-medium uppercase transition-all duration-300 border border-zinc-900 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 relative overflow-hidden group rounded-sm cursor-pointer"
+      >
+        <span class="relative z-10">Cocktails</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-zinc-800/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+      </button>
+
+      <!-- MERCH STORE BUTTON -->
+      <button 
+        onclick="filterCategory('Merchandise')" 
+        class="menu-tab-btn px-8 py-3.5 text-xs tracking-[0.25em] font-medium uppercase transition-all duration-300 border border-zinc-900 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 relative overflow-hidden group rounded-sm cursor-pointer"
+      >
+        <span class="relative z-10">Merch Store</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-zinc-800/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+      </button>
+
+      <!-- COFFEE ACADEMY BUTTON -->
+      <button 
+        onclick="filterCategory('Learn & Do Coffee')" 
+        class="menu-tab-btn px-8 py-3.5 text-xs tracking-[0.25em] font-medium uppercase transition-all duration-300 border border-zinc-900 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 relative overflow-hidden group rounded-sm cursor-pointer"
+      >
+        <span class="relative z-10">Coffee Academy</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-zinc-800/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- MAIN DYNAMIC CONTENT CONTAINER -->
+  <main class="w-full max-w-6xl mx-auto px-6 pb-24">
+    <div id="menuContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <p class="text-zinc-500 text-sm text-center col-span-full py-8">Structuring dynamic asset pipeline...</p>
+    </div>
+  </main>
+
+  <!-- SHOPPING CART SLIDEOUT DRAWER -->
+  <div id="cartSidebar" class="fixed inset-y-0 right-0 w-full max-w-md bg-zinc-950 border-l border-zinc-900 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 hidden flex flex-col justify-between">
+    <div class="p-6 overflow-y-auto space-y-6 flex-1">
+      <div class="flex justify-between items-center border-b border-zinc-900 pb-4">
+        <h3 class="font-serif-luxury text-lg tracking-wider text-zinc-100">Selected Items</h3>
+        <button id="closeCartBtn" class="text-zinc-500 hover:text-zinc-200 text-xs uppercase tracking-widest cursor-pointer">Close</button>
       </div>
+      <div id="cartItemsList" class="space-y-4 pt-2">
+        <!-- Built dynamically from client storage script -->
+      </div>
+    </div>
+    <div class="p-6 bg-zinc-900/20 border-t border-zinc-900 space-y-4">
+      <div class="flex justify-between text-sm tracking-wider">
+        <span class="text-zinc-400">Estimated Total</span>
+        <span id="cartTotalSum" class="font-bold text-zinc-100">₹0</span>
+      </div>
+      <button id="checkoutBtn" class="w-full py-3.5 bg-cyan-500 text-black text-xs font-bold uppercase tracking-widest hover:bg-cyan-400 transition-colors rounded-sm cursor-pointer">
+        Transmit Order to Deck Kitchen
+      </button>
+    </div>
+  </div>
 
-      <p id="modalDescription" class="text-zinc-400 text-sm font-light leading-relaxed mb-8"></p>
-
-      <div class="flex justify-between items-center border-t border-zinc-900 pt-6 modal-footer">
-        <span id="modalPrice" class="text-xl font-medium text-zinc-100"></span>
-        <button class="px-6 py-3 bg-zinc-100 text-zinc-950 font-medium text-xs tracking-widest uppercase hover:bg-cyan-400 transition-colors duration-300">
-          Add to Order
-        </button>
+  <!-- MODAL WINDOW: ITEM INSPECTOR AND PLACEMENT HUB -->
+  <div id="descriptionModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300 hidden">
+    <div id="descModalBox" class="bg-zinc-950 border border-zinc-900 w-full max-w-xl max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300 flex flex-col rounded-sm">
+      <div class="relative w-full aspect-[16/10] bg-black">
+        <img id="modalImage" src="" alt="" class="w-full h-full object-cover"/>
+        <button id="closeDescModalBtn" class="absolute top-4 right-4 bg-black/60 hover:bg-black text-white px-3 py-1 text-xs uppercase tracking-widest border border-zinc-800 rounded-sm cursor-pointer">Dismiss</button>
+      </div>
+      <div class="p-6 space-y-4 flex-1">
+        <div>
+          <p id="modalCategory" class="text-[9px] tracking-[0.25em] text-cyan-400 uppercase font-semibold">Category</p>
+          <h2 id="modalName" class="text-2xl font-serif-luxury text-zinc-100 tracking-wide mt-1">Item Headline</h2>
+        </div>
+        <p id="modalDescription" class="text-sm text-zinc-400 leading-relaxed font-light">Detailed narrative configuration text.</p>
+        <div class="flex justify-between items-center pt-4 border-t border-zinc-900 modal-footer">
+          <span id="modalPrice" class="text-lg font-medium text-zinc-200">₹0</span>
+          <button class="px-6 py-2.5 bg-zinc-100 text-black text-xs font-bold uppercase tracking-widest hover:bg-cyan-400 transition-colors rounded-sm cursor-pointer">
+            Add to Order Bag
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- TABLE BOOKING MODAL -->
-  <div id="bookingModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zinc-950/80 backdrop-blur-md opacity-0 transition-opacity duration-300 p-4">
-    <div id="modalBox" class="relative w-full max-w-md bg-zinc-950 border border-zinc-900/80 p-8 md:p-10 transform scale-95 opacity-0 transition-all duration-300">
+  <!-- MODAL WINDOW: PLACEMENT ARCHITECTURE FOR RESERVATIONS -->
+  <div id="bookingModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm items-center justify-center p-4 opacity-0 transition-opacity duration-300 hidden">
+    <div id="modalBox" class="bg-zinc-950 border border-zinc-900 w-full max-w-md p-6 transform scale-95 opacity-0 transition-all duration-300 rounded-sm">
+      <div class="flex justify-between items-center border-b border-zinc-900 pb-3 mb-4">
+        <h3 class="font-serif-luxury text-lg tracking-wider text-zinc-100">Table Configuration Setup</h3>
+        <button id="closeModalBtn" class="text-zinc-500 hover:text-zinc-200 text-xs uppercase tracking-widest cursor-pointer">Close</button>
+      </div>
       
-      <button id="closeModalBtn" class="absolute top-6 right-6 text-zinc-500 hover:text-zinc-200 transition-colors" aria-label="Close form">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-
-      <div id="formState">
-        <div class="space-y-2 mb-8">
-          <h2 class="text-2xl font-serif-luxury text-zinc-100 tracking-wide">Secure a Table</h2>
-          <p class="text-[9px] tracking-[0.2em] text-cyan-400 uppercase font-semibold">Zero Degree° Experience</p>
-        </div>
-
-        <form id="bookingForm" class="space-y-6">
-          <div class="space-y-4">
-            <div class="space-y-2">
-              <label class="text-[10px] tracking-[0.2em] text-zinc-400 uppercase font-medium block">Email Address</label>
-              <input 
-                id="bookingEmail"
-                type="email" 
-                required 
-                placeholder="yourname@gmail.com" 
-                class="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-100 placeholder-zinc-600 px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 transition-colors duration-200"
-              />
+      <div id="formState" class="space-y-4">
+        <form id="bookingForm" class="space-y-4">
+          <div class="space-y-1">
+            <label class="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Full Name Identification</label>
+            <input type="text" id="bookingName" required class="w-full bg-zinc-900/50 border border-zinc-900 rounded-sm p-2.5 text-sm text-zinc-100 focus:outline-none focus:border-cyan-500/50"/>
+          </div>
+          <div class="space-y-1">
+            <label class="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Digital Mail Endpoint</label>
+            <input type="email" id="bookingEmail" required class="w-full bg-zinc-900/50 border border-zinc-900 rounded-sm p-2.5 text-sm text-zinc-100 focus:outline-none focus:border-cyan-500/50"/>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <label class="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Guest Capacity</label>
+              <input type="number" id="bookingGuests" min="1" max="20" value="2" required class="w-full bg-zinc-900/50 border border-zinc-900 rounded-sm p-2.5 text-sm text-zinc-100 focus:outline-none focus:border-cyan-500/50"/>
             </div>
-
-            <div class="space-y-2">
-              <label class="text-[10px] tracking-[0.2em] text-zinc-400 uppercase font-medium block">Full Name</label>
-              <input 
-                id="bookingName"
-                type="text" 
-                required 
-                placeholder="e.g., Sharanya" 
-                class="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-100 placeholder-zinc-600 px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 transition-colors duration-200"
-              />
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-              <div class="space-y-2">
-                <label class="text-[10px] tracking-[0.2em] text-zinc-400 uppercase font-medium block">Guests</label>
-                <select id="bookingGuests" class="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-100 px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 transition-colors duration-200 appearance-none">
-                  <option value="2 Guests">2 Guests</option>
-                  <option value="4 Guests">4 Guests</option>
-                  <option value="6+ Guests">6+ Guests</option>
-                </select>
-              </div>
-
-              <div class="space-y-2">
-                <label class="text-[10px] tracking-[0.2em] text-zinc-400 uppercase font-medium block">Time</label>
-                <select id="bookingTime" class="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-100 px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 transition-colors duration-200 appearance-none">
-                  <option value="18:00">18:00</option>
-                  <option value="19:30">19:30</option>
-                  <option value="21:00">21:00</option>
-                  <option value="22:30">22:30</option>
-                </select>
-              </div>
+            <div class="space-y-1">
+              <label class="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Arrival Time</label>
+              <input type="time" id="bookingTime" required class="w-full bg-zinc-900/50 border border-zinc-900 rounded-sm p-2.5 text-sm text-zinc-100 focus:outline-none focus:border-cyan-500/50"/>
             </div>
           </div>
-
-          <button 
-            type="submit" 
-            id="submitBtn" 
-            class="w-full py-4 bg-cyan-500 text-zinc-950 font-semibold text-xs tracking-widest uppercase hover:bg-cyan-400 active:scale-[0.98] transition-all duration-200 flex justify-center items-center gap-2"
-          >
+          <button type="submit" id="submitBtn" class="w-full py-3 bg-zinc-100 text-black text-xs font-bold uppercase tracking-widest hover:bg-cyan-400 transition-colors mt-2 rounded-sm cursor-pointer">
             Confirm Reservation
           </button>
         </form>
       </div>
 
-      <!-- SUCCESS STATE -->
-      <div id="successState" class="hidden flex-col items-center justify-center text-center py-8 space-y-6">
-        <div class="w-16 h-16 bg-cyan-950/40 border border-cyan-500 rounded-full flex items-center justify-center text-cyan-400 animate-pulse">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-          </svg>
+      <div id="successState" class="hidden flex-col items-center justify-center text-center py-6 space-y-4">
+        <div class="w-12 h-12 rounded-full border border-cyan-500/30 bg-cyan-950/20 flex items-center justify-center">
+          <span class="text-cyan-400 text-sm font-bold">OK</span>
         </div>
-        <div class="space-y-2">
-          <h3 class="text-xl font-serif-luxury text-zinc-100">Table Secured!</h3>
-          <p class="text-xs text-zinc-400 max-w-xs leading-relaxed">
-            We have registered your reservation smoothly. See you on the hill view viewport!
-          </p>
+        <div class="space-y-1">
+          <h4 class="font-serif-luxury text-lg text-zinc-100">Deck Coordinates Locked</h4>
+          <p class="text-xs text-zinc-400 max-w-xs mx-auto">Your verification log has been cached. Check your digital mail endpoint for seating confirmations.</p>
         </div>
-        <button id="dismissSuccessBtn" class="px-6 py-2 border border-zinc-800 text-zinc-300 hover:text-zinc-100 hover:border-zinc-700 text-xs uppercase tracking-widest transition-colors">
-          Dismiss
-        </button>
+        <button id="dismissSuccessBtn" class="px-6 py-2 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-xs uppercase tracking-widest rounded-sm mt-2 cursor-pointer">Close</button>
       </div>
-
     </div>
   </div>
 
-  <!-- 🛒 CART SIDE PANEL DRAW OVERLAY -->
-  <div id="cartSidebar" class="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-zinc-950 border-l border-zinc-900/80 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col hidden">
-    <div class="p-6 border-b border-zinc-900 flex justify-between items-center">
-      <div>
-        <h3 class="font-serif-luxury text-xl text-zinc-100">Your Selection</h3>
-        <p class="text-[9px] tracking-[0.2em] text-cyan-400 uppercase font-semibold">Ready to Order</p>
-      </div>
-      <button id="closeCartBtn" class="text-zinc-500 hover:text-zinc-200 text-2xl focus:outline-none">&times;</button>
-    </div>
-
-    <!-- Dynamic Cart Items Container Injection Target -->
-    <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4 text-sm text-zinc-400">
-      <p class="text-center py-8 text-zinc-600">Your order bag is currently empty.</p>
-    </div>
-
-    <div class="p-6 border-t border-zinc-900 space-y-4">
-      <div class="flex justify-between items-center text-sm">
-        <span class="text-zinc-400">Total Bill Amount</span>
-        <span id="cartTotalSum" class="text-lg font-medium text-cyan-400">₹0</span>
-      </div>
-      <button id="checkoutBtn" class="w-full py-4 bg-cyan-500 text-zinc-950 font-semibold text-xs tracking-widest uppercase hover:bg-cyan-400 transition-colors duration-200">
-        Place Order
-      </button>
-    </div>
-  </div>
-
-  <!-- JavaScript entry point -->
-  <script type="module" src="/main.js"></script>
+  <!-- Scripts Connection -->
+  <script src="main.js"></script>
 </body>
 </html>

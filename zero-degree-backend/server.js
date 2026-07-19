@@ -378,11 +378,11 @@ app.post('/api/reservations', (req, res) => {
   };
   
   localReservationsMemory.push(newReservation);
-  console.log(`🎉 Table Registered for: ${name} (${guests} at ${time})`);
+  console.log(` Table Registered for: ${name} (${guests} at ${time})`);
   
   res.status(201).json({ success: true, message: 'Reservation secured successfully!' });
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Zero Degree Premium Engine operational on http://localhost:${PORT}`);
+  console.log(` Zero Degree Premium Engine operational on http://localhost:${PORT}`);
 });
