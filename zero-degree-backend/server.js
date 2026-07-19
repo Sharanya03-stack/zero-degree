@@ -16,15 +16,19 @@ app.use(express.json());
 const localReservationsMemory = [];
 
 // EXPANDED LUXURY MENU SCHEMA WITH HOSTED ASSET LINKS
+// REPLACE THE MENU_DATA ARRAY IN zero-degree-backend/server.js WITH THIS:
+
 const MENU_DATA = [
-  // --- MICROBREWERY CRAFT SELECTIONS ---
+  // --- CRAFT BREWERY OPTIONS ---
   {
     id: 1,
     name: "Classic Brewed Pitcher",
     price: "₹450",
     description: "House-crafted signature crisp malt blend with subtle aromatic citrus profiles.",
     category: "Brewery Special",
-    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&auto=format&fit=crop&q=80" 
+    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: true,
+    isChefRecommended: false
   },
   {
     id: 4,
@@ -32,7 +36,9 @@ const MENU_DATA = [
     price: "₹380",
     description: "Traditional Belgian-style wheat beer brewed with fresh coriander seeds and sweet orange peel.",
     category: "Brewery Special",
-    image: "https://images.unsplash.com/photo-1566633806327-68e152aaf26d?w=600&auto=format&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1566633806327-68e152aaf26d?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: true,
+    isChefRecommended: true
   },
   {
     id: 5,
@@ -40,17 +46,21 @@ const MENU_DATA = [
     price: "₹395",
     description: "A dark, rich pour boasting bold notes of espresso, organic cacao, and a smooth, creamy finish.",
     category: "Brewery Special",
-    image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=600&auto=format&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: false,
+    isChefRecommended: false
   },
 
-  // --- SIGNATURE ROOFTOP MIXOLOGY ---
+  // --- SIGNATURE COCKTAILS ---
   {
     id: 6,
     name: "Hill Deck Botanical G&T",
     price: "₹520",
     description: "Premium gin cold-infused with cucumber ribbons, rosemary sprigs, elderflower liqueur, and artisan tonic.",
     category: "Signature Cocktails",
-    image: "https://images.unsplash.com/photo-1524361189360-1e5c2677c57e?w=600&auto=format&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1524361189360-1e5c2677c57e?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: false,
+    isChefRecommended: true
   },
   {
     id: 7,
@@ -58,7 +68,9 @@ const MENU_DATA = [
     price: "₹560",
     description: "Oak-smoked bourbon shaken raw with fresh lime juice, aromatic bitters, and integrated simple syrup over clear ice blocks.",
     category: "Signature Cocktails",
-    image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&auto=format&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: true,
+    isChefRecommended: false
   },
 
   // --- ARTISAN MAIN KITCHEN ---
@@ -68,7 +80,9 @@ const MENU_DATA = [
     price: "₹580",
     description: "Woodfired sourdough crust layered with hand-torn mozzarella, fire-roasted chicken cubes, and house peri-peri drizzle.",
     category: "Main Kitchen",
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: true,
+    isChefRecommended: false
   },
   {
     id: 8,
@@ -76,17 +90,21 @@ const MENU_DATA = [
     price: "₹620",
     description: "Artisan white base featuring gorgonzola, aged parmesan, fresh mozzarella, and fontina, drizzled with raw honey.",
     category: "Main Kitchen",
-    image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&auto=format&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: false,
+    isChefRecommended: true
   },
 
-  // --- ELEVATED PUB FARE ---
+  // --- PREMIUM APPETIZERS ---
   {
     id: 3,
     name: "Truffle Parmesan Fries",
     price: "₹320",
     description: "Golden shoestring fries tossed in white truffle oil and freshly grated aged Parmigiano-Reggiano.",
     category: "Appetizers",
-    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&auto=format&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: true,
+    isChefRecommended: false
   },
   {
     id: 9,
@@ -94,7 +112,53 @@ const MENU_DATA = [
     price: "₹490",
     description: "Succulent jumbo prawns pan-seared in classic Kundapur-style spiced ghee, served with a refreshing mint yogurt dip.",
     category: "Appetizers",
-    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600&auto=format&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: false,
+    isChefRecommended: true
+  },
+
+  // --- BRAND MERCHANDISE ---
+  {
+    id: 10,
+    name: "Zero Degree Over-Sized Street Hoodie",
+    price: "₹1899",
+    description: "Ultra-heavyweight 450 GSM organic cotton hoodie with minimalist geometric branding. Perfect for chilly rooftop evenings.",
+    category: "Merchandise",
+    image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: true,
+    isChefRecommended: false
+  },
+  {
+    id: 11,
+    name: "Insulated Matte Brewer Mug",
+    price: "₹850",
+    description: "Double-walled stainless steel growler mug designed to keep your craft brews sub-zero on hot days.",
+    category: "Merchandise",
+    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: false,
+    isChefRecommended: false
+  },
+
+  // --- LEARN & DO COFFEE EXPERIENCES ---
+  {
+    id: 12,
+    name: "Pour-Over Mastery Workshop Ticket",
+    price: "₹1200",
+    description: "A 90-minute live interactive session with our head barista. Learn bean geometry, water chemistry, and take home a 250g single-origin roast block.",
+    category: "Learn & Do Coffee",
+    image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: false,
+    isChefRecommended: true
+  },
+  {
+    id: 13,
+    name: "Manual Espresso & Latte Art Session",
+    price: "₹1500",
+    description: "Get behind our commercial manual espresso rig. Learn pull diagnostics, milk micro-foaming, and master pouring patterns.",
+    category: "Learn & Do Coffee",
+    image: "https://images.unsplash.com/photo-1517256064527-09c53b2d0c6f?w=600&auto=format&fit=crop&q=80",
+    isBestSeller: true,
+    isChefRecommended: false
   }
 ];
 

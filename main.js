@@ -5,7 +5,7 @@
 
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? "http://localhost:3000/api"
-  : "https://zero-degree-2ohu.onrender.com/api";
+  : "https://zero-degree-2ohu.onrender.com/api"; 
 
 let currentSelectedFoodItem = null;
 const orderCartArrayMemory = [];
@@ -32,12 +32,22 @@ async function fetchMenuData() {
 function renderMenuGrid(menuItems) {
   const container = document.getElementById("menuContainer");
   container.innerHTML = "";
+  
   menuItems.forEach(item => {
+    // Generate badge overlays based on properties from backend array
+    let badgeHTML = "";
+    if (item.isBestSeller) {
+      badgeHTML = `<span class="absolute top-2 left-2 z-10 bg-amber-500 text-zinc-950 font-bold text-[9px] tracking-wider uppercase px-2 py-0.5 rounded-sm shadow-md">🔥 Bestseller</span>`;
+    } else if (item.isChefRecommended) {
+      badgeHTML = `<span class="absolute top-2 left-2 z-10 bg-cyan-500 text-zinc-950 font-bold text-[9px] tracking-wider uppercase px-2 py-0.5 rounded-sm shadow-md">🧑‍🍳 Chef's Pick</span>`;
+    }
+
     const card = document.createElement("div");
-    card.className = "group bg-zinc-900/30 border border-zinc-900 hover:border-cyan-500/30 p-4 transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-4";
+    card.className = "group bg-zinc-900/30 border border-zinc-900 hover:border-cyan-500/30 p-4 transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-4 relative";
     card.innerHTML = `
       <div class="space-y-4">
-        <div class="aspect-[4/3] w-full bg-zinc-950 overflow-hidden border border-zinc-900/50">
+        <div class="aspect-[4/3] w-full bg-zinc-950 overflow-hidden border border-zinc-900/50 relative">
+          ${badgeHTML}
           <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"/>
         </div>
         <div class="space-y-1">
@@ -93,8 +103,10 @@ async function fetchHillWeatherTelemetry() {
     const response = await fetch(`${API_BASE_URL}/hill-weather`);
     const data = await response.json();
     if (data.success) {
-      document.getElementById("widgetVisibility").innerText = data.visibility;
-      document.getElementById("widgetTemp").innerText = data.temperature;
+      const visibilityEl = document.getElementById("widgetVisibility");
+      const tempEl = document.getElementById("widgetTemp");
+      if (visibilityEl) visibilityEl.innerText = data.visibility;
+      if (tempEl) tempEl.innerText = data.temperature;
     }
   } catch (err) { console.error("Weather asset offline", err); }
 }
@@ -103,11 +115,13 @@ function openDescriptionModal(item) {
   currentSelectedFoodItem = item;
   const modal = document.getElementById("descriptionModal");
   const modalBox = document.getElementById("descModalBox");
+  
   document.getElementById("modalImage").src = item.image;
   document.getElementById("modalCategory").innerText = item.category;
   document.getElementById("modalName").innerText = item.name;
   document.getElementById("modalDescription").innerText = item.description;
   document.getElementById("modalPrice").innerText = item.price;
+  
   modal.classList.remove("hidden"); modal.classList.add("flex");
   setTimeout(() => { modal.classList.remove("opacity-0"); modalBox.classList.remove("scale-95", "opacity-0"); }, 10);
 }
@@ -148,7 +162,6 @@ function initCartSystemLogics() {
     addToOrderBtn.onclick = () => {
       if (!currentSelectedFoodItem) return;
       
-      // Check if item already exists in the bag
       const record = orderCartArrayMemory.find(el => el.id === currentSelectedFoodItem.id);
       if (record) {
         record.quantity += 1; 
@@ -156,16 +169,14 @@ function initCartSystemLogics() {
         orderCartArrayMemory.push({ ...currentSelectedFoodItem, quantity: 1 });
       }
       
-      // Update UI components (Bag numbers update instantly)
       updateCartRenderUIStructures(); 
-      
-      // Close the item popup smoothly so you can keep browsing other items!
       closeDescriptionModal(); 
       
-      // Visual feedback on the bag badge
       const badge = document.getElementById("cartCountBadge");
-      badge.classList.add("scale-125", "bg-emerald-400");
-      setTimeout(() => badge.classList.remove("scale-125", "bg-emerald-400"), 300);
+      if (badge) {
+        badge.classList.add("scale-125", "bg-emerald-400");
+        setTimeout(() => badge.classList.remove("scale-125", "bg-emerald-400"), 300);
+      }
     };
   }
   
@@ -175,11 +186,11 @@ function initCartSystemLogics() {
   if (checkoutBtn) {
     checkoutBtn.addEventListener("click", () => {
       if (orderCartArrayMemory.length === 0) {
-        alert("Your bag is empty! Add some craft brews or pizzas first.");
+        alert("Your bag is empty! Add some items first.");
         return;
       }
       alert("🎉 Order placed successfully! Sending instructions to the Zero Degree deck kitchen.");
-      orderCartArrayMemory.length = 0; // Reset array
+      orderCartArrayMemory.length = 0; 
       updateCartRenderUIStructures(); 
       closeCartDrawer();
     });
@@ -198,44 +209,45 @@ function closeCartDrawer() {
   setTimeout(() => side.classList.add("hidden"), 300);
 }
 
-// Dynamically populates the cart drawer with everything added, individual breakdowns, and totals
 function updateCartRenderUIStructures() {
   const itemsList = document.getElementById("cartItemsList");
   const badge = document.getElementById("cartCountBadge");
   const totalSum = document.getElementById("cartTotalSum");
   
   const totalItems = orderCartArrayMemory.reduce((sum, el) => sum + el.quantity, 0);
-  badge.innerText = totalItems;
+  if (badge) badge.innerText = totalItems;
 
   if (orderCartArrayMemory.length === 0) {
-    itemsList.innerHTML = `<p class="text-center py-8 text-zinc-600">Your order bag is currently empty.</p>`;
-    totalSum.innerText = "₹0"; 
+    if (itemsList) itemsList.innerHTML = `<p class="text-center py-8 text-zinc-600">Your order bag is currently empty.</p>`;
+    if (totalSum) totalSum.innerText = "₹0"; 
     return;
   }
   
   let cost = 0; 
-  itemsList.innerHTML = "";
+  if (itemsList) itemsList.innerHTML = "";
   
   orderCartArrayMemory.forEach(item => {
     const price = parseInt(item.price.replace(/[^0-9]/g, ""), 10) || 0;
     const sub = price * item.quantity; 
     cost += sub;
     
-    const row = document.createElement("div");
-    row.className = "flex justify-between items-center border-b border-zinc-900/50 pb-3 text-zinc-200 animate-fadeIn";
-    row.innerHTML = `
-      <div>
-        <p class="font-medium text-zinc-100">${item.name}</p>
-        <p class="text-[11px] text-zinc-500">${item.price} &times; ${item.quantity}</p>
-      </div>
-      <div class="flex items-center gap-4">
-        <span class="font-medium text-zinc-300">₹${sub}</span>
-      </div>
-    `;
-    itemsList.appendChild(row);
+    if (itemsList) {
+      const row = document.createElement("div");
+      row.className = "flex justify-between items-center border-b border-zinc-900/50 pb-3 text-zinc-200";
+      row.innerHTML = `
+        <div>
+          <p class="font-medium text-zinc-100 text-sm">${item.name}</p>
+          <p class="text-[11px] text-zinc-500">${item.price} &times; ${item.quantity}</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="font-medium text-zinc-300 text-sm">₹${sub}</span>
+        </div>
+      `;
+      itemsList.appendChild(row);
+    }
   });
   
-  totalSum.innerText = `₹${cost}`;
+  if (totalSum) totalSum.innerText = `₹${cost}`;
 }
 
 function setupModalListeners() {
@@ -248,35 +260,37 @@ function setupModalListeners() {
   const dismissSuccessBtn = document.getElementById("dismissSuccessBtn");
   const bookingForm = document.getElementById("bookingForm");
 
-  closeDescBtn.addEventListener("click", closeDescriptionModal);
-  descModal.addEventListener("click", (e) => { if (e.target === descModal) closeDescriptionModal(); });
+  if (closeDescBtn) closeDescBtn.addEventListener("click", closeDescriptionModal);
+  if (descModal) descModal.addEventListener("click", (e) => { if (e.target === descModal) closeDescriptionModal(); });
   if (navBookBtn) navBookBtn.addEventListener("click", (e) => { e.preventDefault(); openBookingModal(); });
   if (heroBookBtn) heroBookBtn.addEventListener("click", openBookingModal);
-  closeBookingBtn.addEventListener("click", closeBookingModal);
-  dismissSuccessBtn.addEventListener("click", closeBookingModal);
-  bookingModal.addEventListener("click", (e) => { if (e.target === bookingModal) closeBookingModal(); });
+  if (closeBookingBtn) closeBookingBtn.addEventListener("click", closeBookingModal);
+  if (dismissSuccessBtn) dismissSuccessBtn.addEventListener("click", closeBookingModal);
+  if (bookingModal) bookingModal.addEventListener("click", (e) => { if (e.target === bookingModal) closeBookingModal(); });
 
-  bookingForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById("submitBtn"); btn.innerText = "Securing..."; btn.disabled = true;
-    try {
-      const res = await fetch(`${API_BASE_URL}/reservations`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: document.getElementById("bookingEmail").value,
-          name: document.getElementById("bookingName").value,
-          guests: document.getElementById("bookingGuests").value,
-          time: document.getElementById("bookingTime").value
-        })
-      });
-      const data = await res.json();
-      if (data.success) {
-        document.getElementById("formState").classList.add("hidden");
-        document.getElementById("successState").classList.remove("hidden"); document.getElementById("successState").classList.add("flex");
-        bookingForm.reset();
-      }
-    } catch (err) { alert("Network pipe mismatch."); }
-    finally { btn.innerText = "Confirm Reservation"; btn.disabled = false; }
-  });
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("submitBtn"); btn.innerText = "Securing..."; btn.disabled = true;
+      try {
+        const res = await fetch(`${API_BASE_URL}/reservations`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: document.getElementById("bookingEmail").value,
+            name: document.getElementById("bookingName").value,
+            guests: document.getElementById("bookingGuests").value,
+            time: document.getElementById("bookingTime").value
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById("formState").classList.add("hidden");
+          document.getElementById("successState").classList.remove("hidden"); document.getElementById("successState").classList.add("flex");
+          bookingForm.reset();
+        }
+      } catch (err) { alert("Network error connecting to table servers."); }
+      finally { btn.innerText = "Confirm Reservation"; btn.disabled = false; }
+    });
+  }
 }
