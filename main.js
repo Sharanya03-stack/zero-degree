@@ -5,7 +5,7 @@
 
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? "http://localhost:3000/api"
-  : "https://zero-degree-backend.onrender.com/api"; // We will replace this specific URL in Step 4!
+  : "https://zero-degree-2ohu.onrender.com/api";
 
 let currentSelectedFoodItem = null;
 const orderCartArrayMemory = [];
