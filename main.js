@@ -58,7 +58,8 @@ function renderMenuGrid(menuItems) {
       <div class="space-y-4">
         <div class="aspect-[4/3] w-full bg-zinc-950 overflow-hidden border border-zinc-900/50 relative">
           ${badgeHTML}
-          <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"/>
+          <!-- Images are served in full color by default now -->
+          <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"/>
         </div>
         <div class="space-y-1">
           <p class="text-[9px] tracking-[0.2em] text-cyan-400 uppercase font-semibold">${item.category}</p>
@@ -87,9 +88,9 @@ window.filterCategory = function(categoryName) {
   });
   
   // Highlight clicked button safely using event target context
-  if (event && event.target) {
-    event.target.classList.remove('border-zinc-900', 'text-zinc-400');
-    event.target.classList.add('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
+  if (window.event && window.event.target) {
+    window.event.target.classList.remove('border-zinc-900', 'text-zinc-400');
+    window.event.target.classList.add('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
   }
 
   if (categoryName === 'all') {
