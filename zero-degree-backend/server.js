@@ -114,16 +114,7 @@ const MENU_DATA = [
   // ==========================================
   // SIGNATURE COCKTAILS (Fine Mixology)
   // ==========================================
-  {
-    id: 6,
-    name: "Hill Deck Botanical G&T",
-    price: "₹520",
-    description: "Premium gin cold-infused with cucumber ribbons, rosemary sprigs, elderflower liqueur, and artisan tonic.",
-    category: "Signature Cocktails",
-    image: "https://images.unsplash.com/photo-1524361189360-1e5c2677c57e?w=800&auto=format&fit=crop&q=80",
-    isBestSeller: false,
-    isChefRecommended: true
-  },
+  
   {
     id: 7,
     name: "Smoked Bourbon Sour",
@@ -154,16 +145,7 @@ const MENU_DATA = [
     isBestSeller: false,
     isChefRecommended: true
   },
-  {
-    id: 111,
-    name: "Spiced Apple Toddy",
-    price: "₹480",
-    description: "Warm bourbon base stewed with dark apple cider, star anise, cinnamon quills, and a dash of clove honey.",
-    category: "Signature Cocktails",
-    image: "https://images.unsplash.com/photo-1540182890923-f7960d750d05?w=800&auto=format&fit=crop&q=80",
-    isBestSeller: false,
-    isChefRecommended: false
-  },
+ 
   {
     id: 112,
     name: "Elderflower Rosemary Spritz",
@@ -218,16 +200,7 @@ const MENU_DATA = [
     isBestSeller: false,
     isChefRecommended: true
   },
-  {
-    id: 106,
-    name: "Barista Edition Canvas Apron",
-    price: "₹1,250",
-    description: "Heavy-duty waxed canvas apron accented with genuine split-leather straps and modular brass hardware loops.",
-    category: "Merchandise",
-    image: "https://images.unsplash.com/photo-1617870905525-4299b66ba373?w=800&auto=format&fit=crop&q=80",
-    isBestSeller: false,
-    isChefRecommended: false
-  },
+ 
   {
     id: 113,
     name: "Distressed Denim Brewer Jacket",
@@ -272,16 +245,7 @@ const MENU_DATA = [
     isBestSeller: false,
     isChefRecommended: true
   },
-  {
-    id: 13,
-    name: "Manual Espresso & Latte Art",
-    price: "₹1,500",
-    description: "Get behind our commercial manual espresso rig. Learn extraction diagnostics, milk micro-foaming, and master pouring patterns.",
-    category: "Learn & Do Coffee",
-    image: "https://images.unsplash.com/photo-1517256064527-09c53b2d0c6f?w=800&auto=format&fit=crop&q=80",
-    isBestSeller: true,
-    isChefRecommended: false
-  },
+  
   {
     id: 107,
     name: "Coffee Roasting & Cupping Fundamentals",
