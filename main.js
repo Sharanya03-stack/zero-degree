@@ -294,3 +294,42 @@ function setupModalListeners() {
     });
   }
 }
+// Add these variables and functions to the very bottom of your main.js file
+
+let localMenuMemoryCache = [];
+
+// Modify your existing fetchMenuData inside main.js to save the data to memory:
+async function fetchMenuData() {
+  const container = document.getElementById("menuContainer");
+  try {
+    const response = await fetch(`${API_BASE_URL}/menu`);
+    const data = await response.json();
+    if (data.success && data.menu.length > 0) {
+      localMenuMemoryCache = data.menu; // Save incoming array to memory
+      renderMenuGrid(data.menu);
+    }
+  } catch (error) {
+    container.innerHTML = `<p class="text-rose-500 text-sm text-center col-span-full">⚠️ Server Offline.</p>`;
+  }
+}
+
+// Interactive filtering system
+function filterCategory(categoryName) {
+  // Update button visual active states
+  const buttons = document.querySelectorAll('.menu-tab-btn');
+  buttons.forEach(btn => {
+    btn.classList.remove('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
+    btn.classList.add('border-zinc-900', 'text-zinc-400');
+  });
+  
+  // Highlight clicked button
+  event.target.classList.remove('border-zinc-900', 'text-zinc-400');
+  event.target.classList.add('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
+
+  if (categoryName === 'all') {
+    renderMenuGrid(localMenuMemoryCache);
+  } else {
+    const filtered = localMenuMemoryCache.filter(item => item.category === categoryName);
+    renderMenuGrid(filtered);
+  }
+}

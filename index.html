@@ -77,6 +77,14 @@
       <h2 class="text-3xl md:text-5xl font-serif-luxury text-zinc-100">Explore Our Menu</h2>
     </div>
 
+<div class="flex flex-wrap justify-center gap-4 mb-10 border-b border-zinc-900 pb-6">
+  <button onclick="filterCategory('all')" class="menu-tab-btn active text-xs tracking-widest uppercase py-2 px-4 border border-cyan-500/30 bg-cyan-950/20 text-cyan-400 font-semibold transition-all duration-300">All Menu</button>
+  <button onclick="filterCategory('Brewery Special')" class="menu-tab-btn text-xs tracking-widest uppercase py-2 px-4 border border-zinc-900 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-all duration-300">Brewery</button>
+  <button onclick="filterCategory('Signature Cocktails')" class="menu-tab-btn text-xs tracking-widest uppercase py-2 px-4 border border-zinc-900 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-all duration-300">Cocktails</button>
+  <button onclick="filterCategory('Merchandise')" class="menu-tab-btn text-xs tracking-widest uppercase py-2 px-4 border border-zinc-900 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-all duration-300">⚡ Merch Store</button>
+  <button onclick="filterCategory('Learn & Do Coffee')" class="menu-tab-btn text-xs tracking-widest uppercase py-2 px-4 border border-zinc-900 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-all duration-300">☕ Coffee Academy</button>
+</div>
+
     <!-- Container where dynamic food grid cards will inject -->
     <div id="menuContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <p class="text-zinc-500 text-sm tracking-wider animate-pulse col-span-full text-center">Loading culinary selection...</p>
