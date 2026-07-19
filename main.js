@@ -9,6 +9,7 @@ const API_BASE_URL = window.location.hostname === 'localhost' || window.location
 
 let currentSelectedFoodItem = null;
 const orderCartArrayMemory = [];
+let localMenuMemoryCache = []; // Caches the full menu data for structural sorting
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchMenuData();
@@ -23,8 +24,12 @@ async function fetchMenuData() {
   try {
     const response = await fetch(`${API_BASE_URL}/menu`);
     const data = await response.json();
-    if (data.success && data.menu.length > 0) renderMenuGrid(data.menu);
+    if (data.success && data.menu) {
+      localMenuMemoryCache = data.menu; // Save incoming array to memory cache
+      renderMenuGrid(data.menu);
+    }
   } catch (error) {
+    console.error("Fetch layout error:", error);
     container.innerHTML = `<p class="text-rose-500 text-sm text-center col-span-full">⚠️ Server Offline.</p>`;
   }
 }
@@ -33,6 +38,11 @@ function renderMenuGrid(menuItems) {
   const container = document.getElementById("menuContainer");
   container.innerHTML = "";
   
+  if (menuItems.length === 0) {
+    container.innerHTML = `<p class="text-zinc-500 text-sm text-center col-span-full py-8">No items found in this section.</p>`;
+    return;
+  }
+
   menuItems.forEach(item => {
     // Generate badge overlays based on properties from backend array
     let badgeHTML = "";
@@ -64,6 +74,31 @@ function renderMenuGrid(menuItems) {
     container.appendChild(card);
   });
 }
+
+/**
+ * INTERACTIVE NAVIGATION TAB FILTERS
+ */
+window.filterCategory = function(categoryName) {
+  // Update button visual active states
+  const buttons = document.querySelectorAll('.menu-tab-btn');
+  buttons.forEach(btn => {
+    btn.classList.remove('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
+    btn.classList.add('border-zinc-900', 'text-zinc-400');
+  });
+  
+  // Highlight clicked button safely using event target context
+  if (event && event.target) {
+    event.target.classList.remove('border-zinc-900', 'text-zinc-400');
+    event.target.classList.add('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
+  }
+
+  if (categoryName === 'all') {
+    renderMenuGrid(localMenuMemoryCache);
+  } else {
+    const filtered = localMenuMemoryCache.filter(item => item.category === categoryName);
+    renderMenuGrid(filtered);
+  }
+};
 
 /**
  * FEATURE 1: DYNAMIC BREWERY TELEMETRY LOGGER
@@ -292,44 +327,5 @@ function setupModalListeners() {
       } catch (err) { alert("Network error connecting to table servers."); }
       finally { btn.innerText = "Confirm Reservation"; btn.disabled = false; }
     });
-  }
-}
-// Add these variables and functions to the very bottom of your main.js file
-
-let localMenuMemoryCache = [];
-
-// Modify your existing fetchMenuData inside main.js to save the data to memory:
-async function fetchMenuData() {
-  const container = document.getElementById("menuContainer");
-  try {
-    const response = await fetch(`${API_BASE_URL}/menu`);
-    const data = await response.json();
-    if (data.success && data.menu.length > 0) {
-      localMenuMemoryCache = data.menu; // Save incoming array to memory
-      renderMenuGrid(data.menu);
-    }
-  } catch (error) {
-    container.innerHTML = `<p class="text-rose-500 text-sm text-center col-span-full">⚠️ Server Offline.</p>`;
-  }
-}
-
-// Interactive filtering system
-function filterCategory(categoryName) {
-  // Update button visual active states
-  const buttons = document.querySelectorAll('.menu-tab-btn');
-  buttons.forEach(btn => {
-    btn.classList.remove('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
-    btn.classList.add('border-zinc-900', 'text-zinc-400');
-  });
-  
-  // Highlight clicked button
-  event.target.classList.remove('border-zinc-900', 'text-zinc-400');
-  event.target.classList.add('border-cyan-500/30', 'bg-cyan-950/20', 'text-cyan-400', 'font-semibold');
-
-  if (categoryName === 'all') {
-    renderMenuGrid(localMenuMemoryCache);
-  } else {
-    const filtered = localMenuMemoryCache.filter(item => item.category === categoryName);
-    renderMenuGrid(filtered);
   }
 }
